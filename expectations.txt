@@ -1,0 +1,55 @@
+Question to ask : 
+
+- What are the exact requirements in term of code (MVT for python, design patterns, etc.) ?
+- The mini project seems to be added to the pdf file, is there things to add or is it the mini project as it is to this day ?
+- Do you have recommandations about the code structure for the city traffic project ? 
+
+
+For the finale file : 
+
+- DL 8 janvier 20h
+- 1 pdf / student (name should be in this format : SE-30432-SurnameFirstname.pdf)
+- No natural language explanation asked (mandatory to not put natural language explanations)
+- In it should appears : diagrams (UML, Prism, etc.), in appendix (source code of the project + source code of the mini project)
+- In each student file should appears CLEARLY what the student developped personnaly and he can put others code but his code should be clearly visible.
+- Here are the explanations from the professor : 
+
+"""
+3) Final report (final project documentation) content and recommended
+structure:
+
+Title, Author, Abstract, Team (all team members, including the author of
+the report)
+A. Final project:
+- Design: all relevant design models (semi-formal models, e.g., UML
+diagrams,
+and/or formal models, e.g., PRISM models, Session Types protocols, etc);
+projects which use UML as a modeling language should include at least
+the following diagrams: use case diagram, class diagram, and deployment
+diagram
+B. Final project
+- implementation (source code)
+- Appendix: Mini project (code source only)
+C. References
+
+If necessary, the author can extend the above structure with
+descriptions of:
+- experimental results, test cases, etc.;
+- other design, performance, implementation or verification
+models and components (not mentioned above)
+
+Remark: The final project should be reasonably self contained. It should
+include
+only design and implementation models and components developed by the
+author of the project.
+It is also permitted to include models and/or code developed by the
+other members of your team.
+
+Remark: You should not include material (descriptions of design,
+implementation or verification aspects)
+developed by other authors (which are not members of your development
+team).
+You should clearly cite all external sources in the References section.
+Students who develop the SE project under my supervision
+need NOT prepare a Power Point presentation
+"""
