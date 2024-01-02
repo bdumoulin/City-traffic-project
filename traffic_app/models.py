@@ -1,4 +1,6 @@
 from django.db import models
+from collections import defaultdict, namedtuple
+import heapq
 # Create your models here.
 
 
@@ -43,6 +45,36 @@ class Path(models.Model):
 class Map(models.Model):
     vertices = models.ManyToManyField(Point)
     paths = models.ManyToManyField(Path)
+
+    def get_fastest_path(self, start_point, end_point, weather, time_period):
+        graph = defaultdict(list)
+
+        for path in self.paths.all():
+            # Add edges for both directions in an undirected graph
+            graph[path.start_point].append((path.end_point, path.calculate_real_travel_time(weather, time_period)))
+            graph[path.end_point].append((path.start_point, path.calculate_real_travel_time(weather, time_period)))
+
+        Edge = namedtuple('Edge', ['weight', 'vertex', 'path'])
+        heap = [Edge(0, start_point, [start_point])]
+        visited = set()
+
+        while heap:
+            current_edge = heapq.heappop(heap)
+            current_weight, current_vertex, current_path = current_edge.weight, current_edge.vertex, current_edge.path
+
+            if current_vertex in visited:
+                continue
+
+            visited.add(current_vertex)
+
+            if current_vertex == end_point:
+                return current_path
+
+            for neighbor, weight in graph[current_vertex]:
+                if neighbor not in visited:
+                    heapq.heappush(heap, Edge(current_weight + weight, neighbor, current_path + [neighbor]))
+
+        return None  # If no path found
 
     def __str__(self):
         return f"Map with {self.vertices.count()} vertices and {self.paths.count()} paths"
