@@ -1,0 +1,35 @@
+<!-- first test for the html template to print the map -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Traffic App - Map</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Map</h2>
+        
+        <div class="section">
+            <h3>Vertices</h3>
+            <ul>
+                {% for vertex in vertices %}
+                    <li>{{ vertex.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Paths</h3>
+            <ul>
+                {% for path in paths %}
+                    <li>{{ path.name }} : {{ path.start_point }} to {{ path.end_point }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Add additional scripts here -->
+</body>
+</html>
