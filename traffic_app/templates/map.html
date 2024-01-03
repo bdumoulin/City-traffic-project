@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h2>Map</h2>
-        
+
         <div class="section">
             <h3>Vertices</h3>
             <ul>
@@ -24,7 +24,10 @@
             <h3>Paths</h3>
             <ul>
                 {% for path in paths %}
-                    <li>{{ path.name }} : {{ path.start_point }} to {{ path.end_point }}</li>
+                    <li>
+                        {{ path.name }} : {{ path.start_point }} to {{ path.end_point }}
+                        - Raw time {{ path.raw_time }}
+                    </li>
                 {% endfor %}
             </ul>
         </div>
