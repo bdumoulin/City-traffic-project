@@ -46,6 +46,7 @@ class Map(models.Model):
     vertices = models.ManyToManyField(Point)
     paths = models.ManyToManyField(Path)
 
+    #  using djikstra's algorithm to get the fastest path from start to end
     def get_fastest_path(self, start_point, end_point, weather, time_period):
         graph = defaultdict(list)
 
