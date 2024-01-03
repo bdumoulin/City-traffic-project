@@ -10,12 +10,22 @@ class Point(models.Model):
     def __str__(self):
         return self.name
 
+    def __lt__(self, other):
+        return self.name < other.name
+
+    def __le__(self, other):
+        return self.name <= other.name
+
+    def __hash__(self):
+        return hash(self.name)
+
 
 class Path(models.Model):
     name = models.CharField(max_length=100)
     start_point = models.ForeignKey(Point, on_delete=models.CASCADE, related_name='start_point')
     end_point = models.ForeignKey(Point, on_delete=models.CASCADE, related_name='end_point')
     raw_time = models.FloatField()
+    popularity_coeff = models.FloatField()
 
     WEATHER_OFFSETS = {
         'sun': 1.0,
@@ -25,10 +35,10 @@ class Path(models.Model):
     }
 
     TIME_PERIOD_OFFSETS = {
-        '0-7': 0.9,
-        '7-10': 1.8,
-        '10-16': 1.2,
-        '16-19': 1.8,
+        '0-7': 0.8,
+        '7-10': 1.6,
+        '10-16': 1.1,
+        '16-19': 1.6,
         '19-24': 1.0,
     }
 
@@ -39,7 +49,7 @@ class Path(models.Model):
         weather_offset = self.WEATHER_OFFSETS.get(weather, 1.0)
         time_period_offset = self.TIME_PERIOD_OFFSETS.get(time_period, 1.0)
 
-        return self.raw_time * weather_offset * time_period_offset
+        return self.raw_time * weather_offset * (time_period_offset * self.popularity_coeff)
 
     def __str__(self):
         return f"{self.name} : {self.start_point} to {self.end_point}"
