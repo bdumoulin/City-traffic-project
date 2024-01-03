@@ -20,6 +20,25 @@
             {% endfor %}
         </select>
 
+        <label for="weather">Weather:</label>
+        <select name="weather" id="weather">
+            <option value="sun">Sun</option>
+            <option value="rain">Rain</option>
+            <option value="snow">Snow</option>
+            <option value="fog">Fog</option>
+            <!-- Add more options as needed -->
+        </select>
+
+        <label for="time_period">Time Period:</label>
+        <select name="time_period" id="time_period">
+            <option value="0-7">0h-7h</option>
+            <option value="7-10">7h-10h</option>
+            <option value="10-16">10h-16h</option>
+            <option value="16-19">16h-19h</option>
+            <option value="19-24">19h-24h</option>
+            <!-- Add more options as needed -->
+        </select>
+
         <button type="submit">Calculate</button>
     </form>
 </div>
