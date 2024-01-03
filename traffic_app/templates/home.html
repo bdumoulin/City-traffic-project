@@ -1,0 +1,19 @@
+<!-- templates/home.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+
+    <h2>Welcome to the City Traffic App!</h2>
+
+    <p>Choose an option:</p>
+    <ul>
+        <li><a href="{% url 'map_view' %}">View Map</a></li>
+        <li><a href="{% url 'calculate_best_way' %}">Find Best Way</a></li>
+    </ul>
+
+</body>
+</html>

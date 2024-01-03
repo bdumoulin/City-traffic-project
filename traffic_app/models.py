@@ -32,6 +32,9 @@ class Path(models.Model):
         '19-24': 1.0,
     }
 
+    #  Method to modify to augment complexity of time in road
+    #  MUST RETURN A FLOAT REPRESENTING THE REAL TIME
+    #  The model can be modified as long as this function exists
     def calculate_real_travel_time(self, weather, time_period):
         weather_offset = self.WEATHER_OFFSETS.get(weather, 1.0)
         time_period_offset = self.TIME_PERIOD_OFFSETS.get(time_period, 1.0)

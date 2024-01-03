@@ -4,14 +4,16 @@ from .models import Map, Point
 # Create your views here.
 
 
+def home_view(request):
+    return render(request, 'home.html')
+
+
 def map_view(request):
     map_instance = Map.objects.first()
     vertices = map_instance.vertices.all()
     paths = map_instance.paths.all()
 
-    path_data = [{'path': p, 'time': p.calculate_real_travel_time('rain', '7-10')} for p in paths]
-
-    return render(request, 'map.html', {'vertices': vertices, 'path_data': path_data})
+    return render(request, 'map.html', {'vertices': vertices, 'paths': paths})
 
 
 def calculate_best_way(request):
