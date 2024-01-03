@@ -3,11 +3,13 @@ SE Project for UTCN : City traffic software
 
 
 To launch the app :
+
 python manage.py runserver
 
 
 If the DB is not available directly do :
-python manage.py makemigrations
+
+python manage.py makemigrations & 
 python manage.py migrate
 
 
@@ -28,5 +30,6 @@ Important files to modify :
 
 
 If you modify the model do :
-python manage.py makemigrations
+
+python manage.py makemigrations & 
 python manage.py migrate
