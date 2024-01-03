@@ -28,7 +28,7 @@ def calculate_best_way(request):
         end_point = Point.objects.get(id=end_point_id)
 
         # Perform the calculation for the best way
-        best_way = map_instance.get_fastest_path(start_point, end_point, 'rain', '7-10')
+        best_way = map_instance.get_fastest_path(start_point, end_point, 'sun', '19-24')
 
         return render(request, 'way_result.html', {'start_point': start_point, 'end_point': end_point, 'best_way': best_way})
 
