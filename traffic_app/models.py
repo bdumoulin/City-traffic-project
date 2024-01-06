@@ -27,6 +27,8 @@ class Path(models.Model):
     raw_time = models.FloatField()
     popularity_coeff = models.FloatField()
 
+    current_time = models.FloatField()
+
     WEATHER_OFFSETS = {
         'sun': 1.0,
         'rain': 1.3,
@@ -47,9 +49,25 @@ class Path(models.Model):
     #  The model can be modified as long as this function exists
     def calculate_real_travel_time(self, weather, time_period):
         weather_offset = self.WEATHER_OFFSETS.get(weather, 1.0)
-        time_period_offset = self.TIME_PERIOD_OFFSETS.get(time_period, 1.0)
 
-        return self.raw_time * weather_offset * (time_period_offset * self.popularity_coeff)
+        time_period_offset = self.TIME_PERIOD_OFFSETS.get(self.get_time_period(), 1.0)
+
+        spent_time = self.raw_time * weather_offset * (time_period_offset * self.popularity_coeff)
+        self.current_time = self.current_time + spent_time
+
+        return spent_time
+
+    def get_time_period(self):
+        if self.current_time < 7:
+            return '0-7'
+        if 7 <= self.current_time < 10:
+            return '7-10'
+        if 10 <= self.current_time < 16:
+            return '10-16'
+        if 16 <= self.current_time < 19:
+            return '16-19'
+        if 19 <= self.current_time:
+            return '19-24'
 
     def __str__(self):
         return f"{self.name} : {self.start_point} to {self.end_point}"
