@@ -46,7 +46,7 @@ class Path(models.Model):
         weather_offset = self.WEATHER_OFFSETS.get(self.weather, 1.0)
 
         # Get the time period offset based on the current time
-        time_period_offset = self.TIME_PERIOD_OFFSETS.get(self.get_time_period(), 1.0)
+        time_period_offset = self.TIME_PERIOD_OFFSETS.get(self.current_time(), 1.0)
 
         # Calculate the spent time using the raw time, weather offset, time period offset, and popularity coefficient
         spent_time = self.raw_time * weather_offset * (time_period_offset * self.popularity_coeff)
