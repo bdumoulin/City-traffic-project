@@ -1,5 +1,7 @@
 <!-- way_result.html -->
 
+{% load static %}
+
 <div class="container">
     <h2>Best Way Result</h2>
 
@@ -10,4 +12,8 @@
     <form method="get" action="{% url 'calculate_best_way' %}">
         <button type="submit">Return</button>
     </form>
+</div>
+
+<div>
+    <img src="{% static 'images/graph.jpg' %}" alt="Map Graph">
 </div>

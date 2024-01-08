@@ -1,5 +1,7 @@
 from django.db import models
 from collections import defaultdict, namedtuple
+import matplotlib.pyplot as plt
+import networkx as nx
 import heapq
 # Create your models here.
 
