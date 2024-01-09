@@ -3,7 +3,36 @@ from collections import defaultdict, namedtuple
 import matplotlib.pyplot as plt
 import networkx as nx
 import heapq
+import os
 # Create your models here.
+
+
+def save_graph(graph):
+    G = nx.Graph()
+
+    # Add nodes and edges based on the defaultdict
+    for node, neighbors in graph.items():
+        G.add_node(node)
+        for neighbor, weight in neighbors:
+            G.add_edge(node, neighbor, weight=round(weight, 2))
+
+    # Extract edge weights for labeling
+    edge_labels = {(node, neighbor): data['weight'] for node, neighbor, data in G.edges(data=True)}
+
+    # Draw the graph
+    pos = nx.spring_layout(G)
+    nx.draw(G, pos, with_labels=True, font_weight='bold', node_size=700, node_color='skyblue', font_size=10,
+            edge_color='gray')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red')
+
+    # Ensure the directory exists
+    directory = 'traffic_app/static/images/'
+    os.makedirs(directory, exist_ok=True)
+
+    # Save the plot as an image
+    plt.savefig(os.path.join(directory, 'graph.jpg'))
+
+    plt.close()
 
 
 class Point(models.Model):
@@ -82,11 +111,15 @@ class Map(models.Model):
     #  using djikstra's algorithm to get the fastest path from start to end
     def get_fastest_path(self, start_point, end_point, weather, time_period):
         graph = defaultdict(list)
+        clean_graph = defaultdict(list)
 
         for path in self.paths.all():
             # Add edges for both directions in an undirected graph
             graph[path.start_point].append((path.end_point, path.calculate_real_travel_time(weather, time_period)))
             graph[path.end_point].append((path.start_point, path.calculate_real_travel_time(weather, time_period)))
+
+        print(graph)
+        save_graph(graph)
 
         Edge = namedtuple('Edge', ['weight', 'vertex', 'path'])
         heap = [Edge(0, start_point, [start_point])]
