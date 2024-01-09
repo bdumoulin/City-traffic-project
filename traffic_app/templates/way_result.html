@@ -15,5 +15,23 @@
 </div>
 
 <div>
-    <img src="{% static 'images/graph.jpg' %}?80172489074" alt="Map Graph">
+    <img id="reloadableImage" src="{% static 'images/graph.jpg' %}?80172489074" alt="Map Graph">
+    <script>
+        // Function to reload the image on page refresh
+        function reloadImageOnPageRefresh() {
+            var imgElement = document.getElementById('reloadableImage');
+
+            // Add a timestamp to the image URL to force a reload
+            var timestamp = new Date().getTime();
+            var imageUrl = imgElement.src + '?timestamp=' + timestamp;
+
+            // Set the image source to the new URL
+            imgElement.src = imageUrl;
+        }
+
+        // Call the reloadImageOnPageRefresh function when the page is being unloaded
+        window.addEventListener('beforeunload', function() {
+            reloadImageOnPageRefresh();
+        });
+    </script>
 </div>

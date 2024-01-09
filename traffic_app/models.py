@@ -14,7 +14,7 @@ def save_graph(graph):
     for node, neighbors in graph.items():
         G.add_node(node)
         for neighbor, weight in neighbors:
-            G.add_edge(node, neighbor, weight=round(weight, 2))
+            G.add_edge(node, neighbor, weight=round(weight, 1))
 
     # Extract edge weights for labeling
     edge_labels = {(node, neighbor): data['weight'] for node, neighbor, data in G.edges(data=True)}
