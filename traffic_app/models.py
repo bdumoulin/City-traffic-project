@@ -7,8 +7,13 @@ import os
 # Create your models here.
 
 
-def save_graph(graph):
+def save_graph(graph, path):
     G = nx.Graph()
+
+    edge_color = 'yellow'
+    edge_width = 2
+    arrow_style = '-|>'
+    arrow_size = 25
 
     # Add nodes and edges based on the defaultdict
     for node, neighbors in graph.items():
@@ -16,13 +21,24 @@ def save_graph(graph):
         for neighbor, weight in neighbors:
             G.add_edge(node, neighbor, weight=round(weight, 1))
 
+    # Convert the graph to a directed graph
+    DiG = G.to_directed()
+
+    node_colors = ['red' if node in path else 'skyblue' for node in G.nodes]
+
     # Extract edge weights for labeling
     edge_labels = {(node, neighbor): data['weight'] for node, neighbor, data in G.edges(data=True)}
 
     # Draw the graph
     pos = nx.spring_layout(G)
-    nx.draw(G, pos, with_labels=True, font_weight='bold', node_size=700, node_color='skyblue', font_size=10,
-            edge_color='gray')
+    nx.draw(G, pos, with_labels=True, font_weight='bold', node_size=700, node_color=node_colors, font_size=10,
+            edge_color='gray', width=1)  # Default edge color and width for non-path edges
+
+    # Draw the specified path with arrows
+    path_edges = [(path[i], path[i + 1]) for i in range(len(path) - 1)]
+    nx.draw_networkx_edges(DiG, pos, edgelist=path_edges, edge_color=edge_color, width=edge_width,
+                           arrowstyle=arrow_style, arrowsize=arrow_size)
+
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red')
 
     # Ensure the directory exists
@@ -118,9 +134,6 @@ class Map(models.Model):
             graph[path.start_point].append((path.end_point, path.calculate_real_travel_time(weather, time_period)))
             graph[path.end_point].append((path.start_point, path.calculate_real_travel_time(weather, time_period)))
 
-        print(graph)
-        save_graph(graph)
-
         Edge = namedtuple('Edge', ['weight', 'vertex', 'path'])
         heap = [Edge(0, start_point, [start_point])]
         visited = set()
@@ -135,6 +148,7 @@ class Map(models.Model):
             visited.add(current_vertex)
 
             if current_vertex == end_point:
+                save_graph(graph, current_path)
                 return current_path
 
             for neighbor, weight in graph[current_vertex]:
